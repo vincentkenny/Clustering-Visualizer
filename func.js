@@ -8,7 +8,7 @@ class node {
 
 var cur_stat;
 var arrNode = new Array();
-var centroid;
+var centroid = new Array();
 var group_num = 0;
 
 function add(a, b) {
@@ -69,8 +69,8 @@ function generate() {
             tag.addEventListener("mouseenter", function () {
                 if (mouseDown == true) {
                     coords = this.id.split('-');
-                    y = coords[0];
-                    x = coords[1];
+                    y = parseInt(coords[0]);
+                    x = parseInt(coords[1]);
                     if (this.id != cur_stat) {
                         if (this.className == "grid") {
                             this.className = "node";
@@ -160,10 +160,9 @@ function recalibrate_centroid(group_num, centroid) {
         cur_y = Math.round(cur_y);
         centroid[i] = [cur_x, cur_y];
         address = cur_y + "-" + cur_x;
-        group=i+1;
         data = document.getElementById(address);
-        data.setAttribute("class","centroid"+group);
-        console.log("centoid "+group+" "+address);
+        data.setAttribute("class", "centroid" + cur_category);
+        console.log("centoid " + cur_category + " " + address);
     }
 }
 function reestimate_group(node, centroid) {
@@ -182,23 +181,23 @@ function reestimate_group(node, centroid) {
         node.group = group;
         address = node.y + "-" + node.x;
         data = document.getElementById(address);
-        data.setAttribute("class", "group" + group);        
+        data.setAttribute("class", "group" + group);
     }
 }
 
 function visualize_k_means() {
     console.log(arrNode.length);
     var ctr = 0;
-    var cycle=0;
+    var cycle = 0;
     var myvar = setInterval(function () {
         console.log(ctr);
         reestimate_group(arrNode[ctr], centroid);
         ctr += 1;
-        
-        if(ctr==arrNode.length){
-                clearInterval(myvar);
-                recalibrate_centroid(group_num, centroid);
-            }
+
+        if (ctr == arrNode.length) {
+            clearInterval(myvar);
+            recalibrate_centroid(group_num, centroid);
+        }
         // if (ctr == arrNode.length && convergent==false) {
         //     ctr=0;
         // }
@@ -207,7 +206,7 @@ function visualize_k_means() {
         // }
     }, 50);
 
-    
+
     console.log(cycle);
 
 }
