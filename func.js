@@ -1,9 +1,9 @@
 class node {
-    constructor(x, y, group) {
-        this.x = x;
-        this.y = y;
-        this.group = group;
-    }
+  constructor(x, y, group) {
+    this.x = x;
+    this.y = y;
+    this.group = group;
+  }
 }
 
 var cur_stat;
@@ -12,219 +12,313 @@ var centroid = new Array();
 var group_num = 0;
 
 function add(a, b) {
-    return a + b;
+  return a + b;
 }
 
 function set_group(val) {
-    group_num = val;
-    dropdown = document.getElementsByClassName("dropdown-menu")[0];
-    dropdown.style.display = "none";
+  group_num = val;
+  dropdown = document.getElementsByClassName("dropdown-menu")[0];
+  dropdown.style.display = "none";
 
-    btn = document.getElementById("btn-visualize");
-    btn.innerHTML = "Visualize Clustering";
+  btn = document.getElementById("btn-visualize");
+  btn.innerHTML = "Visualize Clustering";
 }
 
 function view_dropdown() {
-    dropdown = document.getElementsByClassName("dropdown-menu")[0];
-    if (dropdown.style.display == "block") {
-        dropdown.style.display = "none";
-    } else {
-        dropdown.style.display = "block";
-    }
-
+  dropdown = document.getElementsByClassName("dropdown-menu")[0];
+  if (dropdown.style.display == "block") {
+    dropdown.style.display = "none";
+  } else {
+    dropdown.style.display = "block";
+  }
 }
 
 //estrablishing functions and generating grid
 function generate() {
-    group_num = 0;
-    for (i = 0; i < 20; i++) {
-        var tag = document.createElement("tr");
-        tag.setAttribute("id", "row " + i);
-        document.getElementById("board").appendChild(tag);
-        for (j = 0; j < 55; j++) {
-            var tag = document.createElement("td");
-            tag.setAttribute("class", "grid");
-            tag.setAttribute("id", i + "-" + j);
-            tag.addEventListener("click", function () {
-                cur_stat = this.id;
-                coords = this.id.split('-');
-                y = coords[0];
-                x = coords[1];
-                if (this.className == "grid") {
-                    this.className = "node";
-                    arrNode.push(new node(x, y, 0));
-                } else {
-                    this.className = "grid";
-                    for (var k = 0; k < arrNode.length; k++) {
-                        if (arrNode[k].x == x && arrNode[k].y == y) {
-                            arrNode.splice(k, 1);
-                            console.log(x + "-" + y);
-                        }
-                    }
-                }
-            });
-            tag.addEventListener("mousedown", function () {
-                cur_stat = this.id;
-            });
-            tag.addEventListener("mouseenter", function () {
-                if (mouseDown == true) {
-                    coords = this.id.split('-');
-                    y = parseInt(coords[0]);
-                    x = parseInt(coords[1]);
-                    if (this.id != cur_stat) {
-                        if (this.className == "grid") {
-                            this.className = "node";
-                            arrNode.push(new node(x, y, 0));
-                        } else {
-                            this.className = "grid";
-                            for (var k = 0; k < arrNode.length; k++) {
-                                if (arrNode[k].x == x && arrNode[k].y == y) {
-                                    arrNode.splice(k, 1);
-                                    console.log(x + "-" + y);
-                                }
-                            }
-                        }
-                    }
-                    cur_stat = this.id;
-                }
-            });
-            document.getElementById("row " + i).appendChild(tag);
-            // array_grid.push(new grid(j, i));
+  group_num = 0;
+  for (i = 0; i < 20; i++) {
+    var tag = document.createElement("tr");
+    tag.setAttribute("id", "row " + i);
+    document.getElementById("board").appendChild(tag);
+    for (j = 0; j < 55; j++) {
+      var tag = document.createElement("td");
+      tag.setAttribute("class", "grid");
+      tag.setAttribute("id", i + "-" + j);
+      tag.addEventListener("click", function() {
+        cur_stat = this.id;
+        coords = this.id.split("-");
+        y = coords[0];
+        x = coords[1];
+        if (this.className == "grid") {
+          this.className = "node";
+          arrNode.push(new node(x, y, 0));
+        } else {
+          this.className = "grid";
+          for (var k = 0; k < arrNode.length; k++) {
+            if (arrNode[k].x == x && arrNode[k].y == y) {
+              arrNode.splice(k, 1);
+            }
+          }
         }
+      });
+      tag.addEventListener("mousedown", function() {
+        cur_stat = this.id;
+      });
+      tag.addEventListener("mouseenter", function() {
+        if (mouseDown == true) {
+          coords = this.id.split("-");
+          y = parseInt(coords[0]);
+          x = parseInt(coords[1]);
+          if (this.id != cur_stat) {
+            if (this.className == "grid") {
+              this.className = "node";
+              arrNode.push(new node(x, y, 0));
+            } else {
+              this.className = "grid";
+              for (var k = 0; k < arrNode.length; k++) {
+                if (arrNode[k].x == x && arrNode[k].y == y) {
+                  arrNode.splice(k, 1);
+                }
+              }
+            }
+          }
+          cur_stat = this.id;
+        }
+      });
+      document.getElementById("row " + i).appendChild(tag);
+      // array_grid.push(new grid(j, i));
     }
-    var mouseDown = false;
-    body = document.getElementById("board");
-    body.addEventListener("mouseup", function () {
-        mouseDown = false;
-        cur_stat = null;
-    });
-    body.addEventListener("mousedown", function () {
-        mouseDown = true;
-    });
+  }
+  var mouseDown = false;
+  body = document.getElementById("board");
+  body.addEventListener("mouseup", function() {
+    mouseDown = false;
+    cur_stat = null;
+  });
+  body.addEventListener("mousedown", function() {
+    mouseDown = true;
+  });
 }
 
 function reset_grid() {
-    grid = document.getElementById("board").getElementsByTagName("td");
-    for (var i = 0; i < grid.length; i++) {
-        grid[i].setAttribute("class", "grid");
-    }
+  grid = document.getElementById("board").getElementsByTagName("td");
+  for (var i = 0; i < grid.length; i++) {
+    grid[i].setAttribute("class", "grid");
+  }
 }
 
 function scatter_data() {
-    if (group_num > 0) {
-        reset_grid();
-        arrNode = new Array();
-        for (var i = 0; i < 50; i++) {
-            x = Math.floor(Math.random() * 55);
-            y = Math.floor(Math.random() * 20);
-            arrNode.push(new node(x, y, 0));
-        }
-        arrNode.forEach(function (item) {
-            address = item.y + "-" + item.x;
-            data = document.getElementById(address);
-            data.setAttribute("class", "node");
-        });
-        centroid = new Array();
-        for (var i = 0; i < group_num; i++) {
-            do {
-                index = Math.floor(Math.random() * arrNode.length);
-            } while (arrNode[index].group != 0)
-            category = i + 1;
-            arrNode[index].group = category;
-            address = arrNode[index].y + "-" + arrNode[index].x;
-            data = document.getElementById(address);
-            data.setAttribute("class", "group" + category);
-            centroid.push([arrNode[index].x, arrNode[index].y]);
-        }
-    } else {
-        btn = document.getElementById("btn-visualize");
-        btn.innerHTML = "Set Number of Group";
+    btn = document.getElementById("btn-visualize");
+  if (group_num > 0) {
+    reset_grid();
+    arrNode = new Array();
+    for (var i = 0; i < 50; i++) {
+      x = Math.floor(Math.random() * 55);
+      y = Math.floor(Math.random() * 20);
+      arrNode.push(new node(x, y, 0));
     }
+    arrNode.forEach(function(item) {
+      address = item.y + "-" + item.x;
+      data = document.getElementById(address);
+      data.setAttribute("class", "node");
+    });
+    centroid = new Array();
+    for (var i = 0; i < group_num; i++) {
+      do {
+        index = Math.floor(Math.random() * arrNode.length);
+      } while (arrNode[index].group != 0);
+      category = i + 1;
+      arrNode[index].group = category;
+      address = arrNode[index].y + "-" + arrNode[index].x;
+      data = document.getElementById(address);
+      data.setAttribute("class", "group" + category);
+      centroid.push([arrNode[index].x, arrNode[index].y]);
+    }
+    //  document.getElementById("cycle_view").innerHTML("Cycle " + 0);
+    btn.innerHTML = "Visualize Clustering";
+  } else {
+    btn.innerHTML = "Set Number of Group!";
+  }
+}
+
+function toggle_cycle() {
+  cycle = document.getElementById("cycle_view");
+  if (cycle.style.display == "none") cycle.style.display = "block";
+  else cycle.style.display = "none";
+}
+
+//// AI METHODS
+function clear_centroid(group_num, centroid) {
+  for (var i = 0; i < group_num; i++) {
+    centroid_x = centroid[i][0];
+    centroid_y = centroid[i][1];
+    address = centroid_y + "-" + centroid_x;
+    data = document.getElementById(address);
+    cur_category = i + 1;
+    a_node = false;
+    arrNode.forEach(function(item) {
+      if (item.x == centroid_x && item.y == centroid_y) {
+        data.setAttribute("class", "group" + item.group);
+        a_node = true;
+      }
+    });
+    if (!a_node) {
+      data.setAttribute("class", "grid");
+    }
+  }
 }
 function recalibrate_centroid(group_num, centroid) {
-    for (var i = 0; i < group_num; i++) {
-        cur_category = i + 1;
-        cur_x = 0;
-        cur_y = 0;
-        num_member = 0;
-        arrNode.forEach(function (item) {
-            if (item.group == cur_category) {
-                cur_x += item.x;
-                cur_y += item.y;
-                num_member += 1;
-            }
-        });
-        cur_x /= num_member;
-        cur_y /= num_member;
-        cur_x = Math.round(cur_x);
-        cur_y = Math.round(cur_y);
-        centroid[i] = [cur_x, cur_y];
-        address = cur_y + "-" + cur_x;
-        data = document.getElementById(address);
-        data.setAttribute("class", "centroid" + cur_category);
-        console.log("centoid " + cur_category + " " + address);
-    }
+  for (var i = 0; i < group_num; i++) {
+    cur_category = i + 1;
+    cur_x = 0;
+    cur_y = 0;
+    num_member = 0;
+    arrNode.forEach(function(item) {
+      if (item.group == cur_category) {
+        cur_x += item.x;
+        cur_y += item.y;
+        num_member += 1;
+      }
+    });
+    cur_x /= num_member;
+    cur_y /= num_member;
+    cur_x = Math.round(cur_x);
+    cur_y = Math.round(cur_y);
+    centroid[i] = [cur_x, cur_y];
+    address = cur_y + "-" + cur_x;
+    data = document.getElementById(address);
+    data.setAttribute("class", "centroid" + cur_category);
+  }
 }
-function reestimate_group(node, centroid) {
-    if (node != null) {
-        dist = 100;
-        group = node.group;
-        for (var i = 0; i < centroid.length; i++) {
-            centroid_x = centroid[i][0];
-            centroid_y = centroid[i][1];
-            dist_centroid = Math.abs(node.x - centroid_x) + Math.abs(node.y - centroid_y);
-            if (dist_centroid < dist) {
-                dist = dist_centroid;
-                group = i + 1;
-            }
-        }
-        node.group = group;
-        address = node.y + "-" + node.x;
-        data = document.getElementById(address);
-        data.setAttribute("class", "group" + group);
+function reestimate_group(node, centroid, convergent) {
+  if (node != null) {
+    dist = 100;
+    group = node.group;
+    for (var i = 0; i < centroid.length; i++) {
+      centroid_x = centroid[i][0];
+      centroid_y = centroid[i][1];
+      dist_centroid = Math.round(
+        Math.sqrt(
+          Math.pow(node.x - centroid_x, 2) + Math.pow(node.y - centroid_y, 2)
+        )
+      );
+      if (dist_centroid < dist) {
+        dist = dist_centroid;
+        new_group = i + 1;
+      }
     }
+    if (group != new_group) {
+      convergent = false;
+    }
+    node.group = new_group;
+    address = node.y + "-" + node.x;
+    data = document.getElementById(address);
+    data.setAttribute("class", "group" + new_group);
+  }
+  return convergent;
 }
 
 function visualize_k_means() {
-    console.log(arrNode.length);
+  if (group_num > 0 && arrNode.length>0) {
+      toggle_cycle();
     var ctr = 0;
-    var cycle = 0;
-    var myvar = setInterval(function () {
-        console.log(ctr);
-        reestimate_group(arrNode[ctr], centroid);
-        ctr += 1;
+    var cycle = 1;
+    var convergent = true;
+    var myvar = setInterval(function() {
+      convergent = reestimate_group(arrNode[ctr], centroid, convergent);
+      ctr += 1;
 
-        if (ctr == arrNode.length) {
-            clearInterval(myvar);
+      if (ctr == arrNode.length) {
+        clear_centroid(group_num, centroid);
+        if (convergent) {
+          clearInterval(myvar);
+          console.log("cycle completed");
+        } else {
+          setTimeout(function() {
             recalibrate_centroid(group_num, centroid);
+          }, 1000);
+          setTimeout(function() {
+            convergent = true;
+            ctr = 0;
+            cycle += 1;
+            document.getElementById("cycle_view").innerHTML("Cycle " + cycle);
+          }, 4000);
         }
-        // if (ctr == arrNode.length && convergent==false) {
-        //     ctr=0;
-        // }
-        // else if(ctr==arrNode.length &&convergent==true){
-        //     clearInterval(myvar);
-        // }
+      }
     }, 50);
-
-
-    console.log(cycle);
-
+  }else if(group_num<=0){
+    btn = document.getElementById("btn-visualize");
+    btn.innerHTML = "Set Number of Group!";
+  }else if(arrNode.length<=0){
+    btn = document.getElementById("btn-visualize");
+    btn.innerHTML = "Scatter Data First!";
+  }
 }
 
-// function testTimer() {
+// function reestablish_class(arrNode){
+//     arrNode.forEach(function(item){
+//         address = item.y + "-" + item.x;
+//         temp = document.getElementById(address);
+//         temp.setAttribute("class","group"+item.group);
+//     });
+// }
+// function check_missing(arrNode) {
+//   num1 = 0;
+//   num2 = 0;
+//   num3 = 0;
+//   num4 = 0;
 
-//     axes = document.getElementsByClassName("node");
-//     ctr = 0;
-//     myvar = setInterval(function () {
-//         axes[ctr].setAttribute("class", "group1");
-//         console.log(axes[ctr]);
-//     }, 1000);
-//     if (ctr == axes.length) {
-//         clearInterval(myvar);
+//   arrNode.forEach(function(item) {
+//     address = item.y + "-" + item.x;
+//     temp = document.getElementById(address);
+//     // if (temp. className == "group1") num1 += 1;
+//     // if (temp.className == "group2") num2 += 1;
+//     // if (temp.className == "group3") num3 += 1;
+//     // if (temp.className == "group4") num4 += 1;
+//     if (temp.classList.contains("group1")) {
+//         temp.setAttribute("class","group1");
+//       num1 += 1;
 //     }
+//     if (temp.classList.contains("group2")) {
+//         temp.setAttribute("class","group2");
+//       num2 += 1;
+//     }
+//     if (temp.classList.contains("group3")){
+//         temp.setAttribute("class","group3");
+//       num3 += 1;
+//     }
+//     if (temp.classList.contains("group4")){
+//         temp.setAttribute("class","group4");
+//       num4 += 1;
+//     }
+//   });
+//   console.log("manual");
+//   console.log(num1);
+//   console.log(num2);
+//   console.log(num3);
+//   console.log(num4);
+//   console.log("getelementsbyclassname");
+//   data1 = document.getElementsByClassName("group1");
+//   data2 = document.getElementsByClassName("group2");
+//   data3 = document.getElementsByClassName("group3");
+//   data4 = document.getElementsByClassName("group4");
+//   console.log(data1.length);
+//   console.log(data2.length);
+//   console.log(data3.length);
+//   console.log(data4.length);
+//   total =
+//     parseInt(data1.length) +
+//     parseInt(data2.length) +
+//     parseInt(data3.length) +
+//     parseInt(data4.length);
+//   console.log("total items " + total);
+//   console.log("queryselectorall");
+//   all1 = document.querySelectorAll(".group1");
+//   all2 = document.querySelectorAll(".group2");
+//   all3 = document.querySelectorAll(".group3");
+//   all4 = document.querySelectorAll(".group4");
+//   console.log(all1.length);
+//   console.log(all2.length);
+//   console.log(all3.length);
+//   console.log(all4.length);
 // }
-
-// function stopTimer() {
-//     clearInterval(myvar);
-// }
-

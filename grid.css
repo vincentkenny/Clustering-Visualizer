@@ -14,8 +14,6 @@ button{
     
 }
 
-
-
 #container{
     width:100%;
     padding:auto;
@@ -485,4 +483,8 @@ button{
 }
 .dropdown-menu a:hover{
   background-color:#5eaaa8;
+}
+
+#cycle_view{
+  display:none;
 }
