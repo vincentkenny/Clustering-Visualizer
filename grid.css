@@ -1,125 +1,152 @@
-body{
-    margin:0;
+body {
+  margin: 0;
 }
-button{
-  cursor:pointer;
-  outline:none;
+button {
+  cursor: pointer;
+  outline: none;
 }
-.grid{
-    width: 22px;
-    height: 22px;
-    background-color: white;
-    outline: 1px solid rgb(175, 216, 248);
-    display: inline-block;
-    
+.grid {
+  width: 22px;
+  height: 22px;
+  background-color: white;
+  outline: 1px solid rgb(175, 216, 248);
+  display: inline-block;
+}
+.grid-transition{
+  width: 22px;
+  height: 22px;
+  background-color: white;
+  outline: 1px solid rgb(175, 216, 248);
+  display: inline-block;
+  animation-name: gridAnimation;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-out;
+  animation-delay: 0;
+  animation-direction: alternate;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
 }
 
-#container{
-    width:100%;
-    padding:auto;
-    
-}
-#board{
-  width: 100%;
-  padding-left:15px;
-}
-.nav{
-  width:100%;
-  height:15%;
-  background-color: #056676;
-  margin-bottom: 20px;
-  position:relative;
-}
-.navbar-header{
-  width:25%;
-  height:50%;
-  align-items: center;
-  display:flex;
-  justify-content: center;
-}
-.navbar-brand{
-  color:white;
-  font-size: 21;
-  text-decoration: none;
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: bold; 
-  animation-name: transTitleBack;
-  animation-timing-function: ease-in;
-  animation-duration:0.3s;
-}
-@keyframes transTitleBack{
+@keyframes gridAnimation {
   0% {
-    color: #30CC7D;
+    transform: scale(0.3);
+    background-color: rgb(22, 0, 30);
+  }
+  50%{
+    transform: scale(0.7);
+    background-color: rgba(22, 0, 30, 0.5);
   }
 
   100% {
-    color:  white;
+    transform: scale(1);
+    background-color: white;
   }
 }
-.navbar-brand:hover{
-  animation-name:transTitle;
-  animation-duration:0.3s;
-  animation-timing-function: ease-out;
-    animation-delay: 0;
-    animation-direction: alternate;
-    animation-iteration-count: 1;
-    animation-fill-mode: forwards;
-    animation-play-state: running;
+#container {
+  width: 100%;
+  padding: auto;
 }
-@keyframes transTitle{
+#board {
+  width: 100%;
+  padding-left: 15px;
+}
+.nav {
+  width: 100%;
+  height: 15%;
+  background-color: #056676;
+  margin-bottom: 20px;
+  position: relative;
+}
+.navbar-header {
+  width: 25%;
+  height: 50%;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+.navbar-brand {
+  color: white;
+  font-size: 21;
+  text-decoration: none;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  animation-name: transTitleBack;
+  animation-timing-function: ease-in;
+  animation-duration: 0.3s;
+}
+@keyframes transTitleBack {
+  0% {
+    color: #30cc7d;
+  }
+
+  100% {
+    color: white;
+  }
+}
+.navbar-brand:hover {
+  animation-name: transTitle;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-out;
+  animation-delay: 0;
+  animation-direction: alternate;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+}
+@keyframes transTitle {
   0% {
     color: white;
   }
 
   100% {
-    color:  #30CC7D;
+    color: #30cc7d;
   }
 }
-.toolbar-container{
-  width:100%;
-  height:50%;
-  position:absolute;
-  bottom:0;
-  
+.toolbar-container {
+  width: 100%;
+  height: 50%;
+  position: absolute;
+  bottom: 0;
+
   list-style-type: none;
   display: flex;
-  align-items:center;
+  align-items: center;
 }
-.toolbar-item{
-  color:white;
+.toolbar-item {
+  color: white;
   text-decoration: none;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 16;
   font-weight: bold;
   margin-left: 30px;
-  width:100px;
+  width: 100px;
 
   animation-name: transTitleBack;
   animation-timing-function: ease-in;
-  animation-duration:0.3s;
+  animation-duration: 0.3s;
 }
-.toolbar-item:hover{
-  animation-name:transDropdown;
-  animation-duration:0.3s;
+.toolbar-item:hover {
+  animation-name: transDropdown;
+  animation-duration: 0.3s;
   animation-timing-function: ease-out;
-    animation-delay: 0;
-    animation-direction: alternate;
-    animation-iteration-count: 1;
-    animation-fill-mode: forwards;
-    animation-play-state: running;
+  animation-delay: 0;
+  animation-direction: alternate;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
 }
-@keyframes transDropdown{
+@keyframes transDropdown {
   0% {
     color: white;
   }
 
   100% {
-    color:  #30CC7D;
-    
+    color: #30cc7d;
   }
 }
-.toolbar-dropdown{
-  color:white;
+.toolbar-dropdown {
+  color: white;
   text-decoration: none;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 16;
@@ -127,107 +154,76 @@ button{
 
   animation-name: transTitleBack;
   animation-timing-function: ease-in;
-  animation-duration:0.3s;
+  animation-duration: 0.3s;
 }
-.toolbar-dropdown:hover{
-  animation-name:transTitle;
-  animation-duration:0.3s;
+.toolbar-dropdown:hover {
+  animation-name: transTitle;
+  animation-duration: 0.3s;
   animation-timing-function: ease-out;
-    animation-delay: 0;
-    animation-direction: alternate;
-    animation-iteration-count: 1;
-    animation-fill-mode: forwards;
-    animation-play-state: running;
+  animation-delay: 0;
+  animation-direction: alternate;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
 }
-.toolbar-dropdown:hover .sideIcon{
-  animation-name:transSide;
-  animation-duration:0.3s;
+.toolbar-dropdown:hover .sideIcon {
+  animation-name: transSide;
+  animation-duration: 0.3s;
   animation-timing-function: ease-out;
-    animation-delay: 0;
-    animation-direction: alternate;
-    animation-iteration-count: 1;
-    animation-fill-mode: forwards;
-    animation-play-state: running;
+  animation-delay: 0;
+  animation-direction: alternate;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
 }
-@keyframes transSide{
+@keyframes transSide {
   0% {
     color: black;
   }
 
   100% {
-    color:  #30CC7D;
+    color: #30cc7d;
   }
-}
-
-
-.node{
-    width: 22px;
-    height: 22px;
-    background-color: rgb(22, 0, 30);
-    outline: 1px solid rgb(175, 216, 248);
-    display: inline-block;
-    
 }
 
 .node {
-    animation-name: visitedAnimation;
-    animation-duration: 0.2s;
-    animation-timing-function: ease-out;
-    animation-delay: 0;
-    animation-direction: alternate;
-    animation-iteration-count: 1;
-    animation-fill-mode: forwards;
-    animation-play-state: running;
-  }
-
-  @keyframes visitedAnimation {
-    0% {
-      transform: scale(0.3);
-      background-color: rgba(0, 0, 66, 0.75);
-    }
-  
-    100% {
-      transform: scale(1);
-      background-color:  rgb(12, 53, 71);
-    }
-  }
-  
-.group1{
-    width: 22px;
-    height: 22px;
-    background-color: rgb(26,208,157);
-    outline: 1px solid rgb(175, 216, 248);
-    display: inline-block;
-    animation-name: visitedAnimation1;
-    animation-duration: 0.4s;
-    animation-timing-function: ease-out;
-    animation-delay: 0;
-    animation-direction: alternate;
-    animation-iteration-count: 1;
-    animation-fill-mode: forwards;
-    animation-play-state: running;
-    
+  width: 22px;
+  height: 22px;
+  background-color: rgb(22, 0, 30);
+  outline: 1px solid rgb(175, 216, 248);
+  display: inline-block;
 }
 
-  @keyframes visitedAnimation1 {
-    0% {
-      transform: scale(0.3);
-      background-color: rgba(0, 0, 66, 0.75);
-    }
-  
-    100% {
-      transform: scale(1);
-      background-color:  rgb(26,208,157);
-    }
+.node {
+  animation-name: visitedAnimation;
+  animation-duration: 0.2s;
+  animation-timing-function: ease-out;
+  animation-delay: 0;
+  animation-direction: alternate;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+}
+
+@keyframes visitedAnimation {
+  0% {
+    transform: scale(0.3);
+    background-color: rgba(0, 0, 66, 0.75);
   }
 
-  .group2{
-    width: 22px;
-    height: 22px;
-    background-color: rgb(226, 212, 84);
-    outline: 1px solid rgb(175, 216, 248);
-    display: inline-block;
-    animation-name: visitedAnimation2;
+  100% {
+    transform: scale(1);
+    background-color: rgb(12, 53, 71);
+  }
+}
+
+.group1 {
+  width: 22px;
+  height: 22px;
+  background-color: rgb(26, 208, 157);
+  outline: 1px solid rgb(175, 216, 248);
+  display: inline-block;
+  animation-name: visitedAnimation1;
   animation-duration: 0.4s;
   animation-timing-function: ease-out;
   animation-delay: 0;
@@ -235,7 +231,34 @@ button{
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
   animation-play-state: running;
-    
+}
+
+@keyframes visitedAnimation1 {
+  0% {
+    transform: scale(0.3);
+    background-color: rgba(0, 0, 66, 0.75);
+  }
+
+  100% {
+    transform: scale(1);
+    background-color: rgb(26, 208, 157);
+  }
+}
+
+.group2 {
+  width: 22px;
+  height: 22px;
+  background-color: rgb(226, 212, 84);
+  outline: 1px solid rgb(175, 216, 248);
+  display: inline-block;
+  animation-name: visitedAnimation2;
+  animation-duration: 0.4s;
+  animation-timing-function: ease-out;
+  animation-delay: 0;
+  animation-direction: alternate;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
 }
 
 @keyframes visitedAnimation2 {
@@ -249,7 +272,7 @@ button{
     background-color: rgb(226, 212, 84);
   }
 }
-.group3{
+.group3 {
   width: 22px;
   height: 22px;
   background-color: rgb(247, 113, 125);
@@ -263,7 +286,6 @@ button{
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
   animation-play-state: running;
-  
 }
 
 @keyframes visitedAnimation3 {
@@ -274,13 +296,13 @@ button{
 
   100% {
     transform: scale(1);
-    background-color:  rgb(247, 113, 125);
+    background-color: rgb(247, 113, 125);
   }
 }
-.group4{
+.group4 {
   width: 22px;
   height: 22px;
-  background-color: rgb(59,191,255);
+  background-color: rgb(59, 191, 255);
   outline: 1px solid rgb(175, 216, 248);
   display: inline-block;
   animation-name: visitedAnimation4;
@@ -291,7 +313,6 @@ button{
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
   animation-play-state: running;
-  
 }
 @keyframes visitedAnimation4 {
   0% {
@@ -301,24 +322,24 @@ button{
 
   100% {
     transform: scale(1);
-    background-color:rgb(59,191,255);
+    background-color: rgb(59, 191, 255);
   }
 }
 
-.centroid1{
+.centroid1 {
   width: 22px;
   height: 22px;
-  background-color: rgba(35, 255, 193, 0.3);
+  background-color: rgb(1, 128, 92);
   outline: 1px solid rgb(175, 216, 248);
   display: inline-block;
   animation-name: centroidAnimation1;
-  animation-duration: 2s;
+  animation-duration: 1s;
   animation-delay: 0;
   animation-play-state: running;
 }
 @keyframes centroidAnimation1 {
   0% {
-    background-color: rgba(35, 255, 193, 0.3);
+    background-color: rgb(1, 128, 92);
   }
   25% {
     transform: scale(0.5);
@@ -326,7 +347,7 @@ button{
   }
 
   50% {
-    background-color: rgba(35, 255, 193, 0.3);
+    background-color: rgb(1, 128, 92);
   }
 
   75% {
@@ -335,24 +356,24 @@ button{
   }
 
   100% {
-    background-color:rgba(35, 255, 193, 0.3);
+    background-color: rgb(1, 128, 92);
   }
 }
 
-.centroid2{
+.centroid2 {
   width: 22px;
   height: 22px;
-  background-color: rgba(253, 237, 95, 0.3);
+  background-color: rgb(161, 145, 1);
   outline: 1px solid rgb(175, 216, 248);
   display: inline-block;
   animation-name: centroidAnimation2;
-  animation-duration: 2s;
+  animation-duration: 1s;
   animation-delay: 0;
   animation-play-state: running;
 }
 @keyframes centroidAnimation2 {
   0% {
-    background-color: rgba(253, 237, 95, 0.3);
+    background-color: rgb(161, 145, 1);
   }
   25% {
     transform: scale(0.5);
@@ -360,7 +381,7 @@ button{
   }
 
   50% {
-    background-color: rgba(253, 237, 95, 0.3);
+    background-color: rgb(161, 145, 1);
   }
 
   75% {
@@ -369,23 +390,23 @@ button{
   }
 
   100% {
-    background-color:rgba(253, 237, 95, 0.3);
+    background-color: rgb(161, 145, 1);
   }
 }
-.centroid3{
+.centroid3 {
   width: 22px;
   height: 22px;
-  background-color: rgba(253, 86, 100, 0.3);
+  background-color: rgb(165, 0, 14);
   outline: 1px solid rgb(175, 216, 248);
   display: inline-block;
   animation-name: centroidAnimation3;
-  animation-duration: 2s;
+  animation-duration: 1s;
   animation-delay: 0;
   animation-play-state: running;
 }
 @keyframes centroidAnimation3 {
   0% {
-    background-color: rgba(253, 86, 100, 0.3);
+    background-color: rgb(165, 0, 14);
   }
   25% {
     transform: scale(0.5);
@@ -393,7 +414,7 @@ button{
   }
 
   50% {
-    background-color: rgba(253, 86, 100, 0.3);
+    background-color: rgb(165, 0, 14);
   }
 
   75% {
@@ -402,23 +423,23 @@ button{
   }
 
   100% {
-    background-color:rgba(253, 86, 100, 0.3);
+    background-color: rgb(165, 0, 14);
   }
 }
-.centroid4{
+.centroid4 {
   width: 22px;
   height: 22px;
-  background-color: rgba(59, 190, 255, 0.493);
+  background-color: rgb(0, 91, 136);
   outline: 1px solid rgb(175, 216, 248);
   display: inline-block;
   animation-name: centroidAnimation4;
-  animation-duration: 2s;
+  animation-duration: 1s;
   animation-delay: 0;
   animation-play-state: running;
 }
 @keyframes centroidAnimation4 {
   0% {
-    background-color: rgba(59, 190, 255, 0.493);
+    background-color: rgb(0, 91, 136);
   }
   25% {
     transform: scale(0.5);
@@ -426,7 +447,7 @@ button{
   }
 
   50% {
-    background-color: rgba(59, 190, 255, 0.493);
+    background-color: rgb(0, 91, 136);
   }
 
   75% {
@@ -435,56 +456,55 @@ button{
   }
 
   100% {
-    background-color:rgba(59, 190, 255, 0.493);
+    background-color: rgb(0, 91, 136);
   }
 }
-  .sideIcon{
-    color:black;
-    animation-name: transSideBack;
-    animation-timing-function: ease-in;
-    animation-duration:0.3s;
+.sideIcon {
+  color: black;
+  animation-name: transSideBack;
+  animation-timing-function: ease-in;
+  animation-duration: 0.3s;
+}
+@keyframes transSideBack {
+  0% {
+    color: #30cc7d;
   }
-  @keyframes transSideBack{
-    0% {
-      color: #30CC7D;
-    }
-  
-    100% {
-      color:  black;
-    }
+
+  100% {
+    color: black;
   }
-#btn-visualize{
-  width:200px;
+}
+#btn-visualize {
+  width: 200px;
   background-color: black;
-  border:none;
+  border: none;
   text-decoration: none;
   height: 90%;
   border-radius: 10px;
   margin-bottom: 5px;
 }
-.dropdown-menu{
+.dropdown-menu {
   display: none;
   position: absolute;
   background-color: #056676;
   min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
-  left:30px;
+  left: 30px;
   border-radius: 5px;
-  
 }
-.dropdown-menu a{
-  color:black;
-  padding:12px 16px;
+.dropdown-menu a {
+  color: black;
+  padding: 12px 16px;
   text-decoration: none;
   display: block;
-  color:white;
+  color: white;
   border-radius: 5px;
 }
-.dropdown-menu a:hover{
-  background-color:#5eaaa8;
+.dropdown-menu a:hover {
+  background-color: #5eaaa8;
 }
 
-#cycle_view{
-  display:none;
+#cycle_view {
+  display: none;
 }

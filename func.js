@@ -10,12 +10,14 @@ var cur_stat;
 var arrNode = new Array();
 var centroid = new Array();
 var group_num = 0;
+var myvar;
 
 function add(a, b) {
   return a + b;
 }
 
 function set_group(val) {
+  stop_cycle();
   group_num = val;
   dropdown = document.getElementsByClassName("dropdown-menu")[0];
   dropdown.style.display = "none";
@@ -49,10 +51,10 @@ function generate() {
         coords = this.id.split("-");
         y = coords[0];
         x = coords[1];
-        if (this.className == "grid") {
+        if (this.className == "grid" ||this.className=="grid-transition") {
           this.className = "node";
           arrNode.push(new node(x, y, 0));
-        } else {
+        } else if(this.className=="node"){
           this.className = "grid";
           for (var k = 0; k < arrNode.length; k++) {
             if (arrNode[k].x == x && arrNode[k].y == y) {
@@ -70,10 +72,10 @@ function generate() {
           y = parseInt(coords[0]);
           x = parseInt(coords[1]);
           if (this.id != cur_stat) {
-            if (this.className == "grid") {
+            if (this.className == "grid"||this.className=="grid-transition") {
               this.className = "node";
               arrNode.push(new node(x, y, 0));
-            } else {
+            } else if(this.className=="node"){
               this.className = "grid";
               for (var k = 0; k < arrNode.length; k++) {
                 if (arrNode[k].x == x && arrNode[k].y == y) {
@@ -98,9 +100,13 @@ function generate() {
   body.addEventListener("mousedown", function() {
     mouseDown = true;
   });
+  cycle_view = document.getElementById("cycle_view");
+  cycle_view.style.display = "none";
 }
 
 function reset_grid() {
+  stop_cycle();
+  arrNode = new Array();
   grid = document.getElementById("board").getElementsByTagName("td");
   for (var i = 0; i < grid.length; i++) {
     grid[i].setAttribute("class", "grid");
@@ -108,7 +114,8 @@ function reset_grid() {
 }
 
 function scatter_data() {
-    btn = document.getElementById("btn-visualize");
+  stop_cycle();
+  btn = document.getElementById("btn-visualize");
   if (group_num > 0) {
     reset_grid();
     arrNode = new Array();
@@ -134,7 +141,7 @@ function scatter_data() {
       data.setAttribute("class", "group" + category);
       centroid.push([arrNode[index].x, arrNode[index].y]);
     }
-    //  document.getElementById("cycle_view").innerHTML("Cycle " + 0);
+    document.getElementById("cycle_view").innerHTML = "Cycle : " + 1;
     btn.innerHTML = "Visualize Clustering";
   } else {
     btn.innerHTML = "Set Number of Group!";
@@ -142,11 +149,18 @@ function scatter_data() {
 }
 
 function toggle_cycle() {
-  cycle = document.getElementById("cycle_view");
-  if (cycle.style.display == "none") cycle.style.display = "block";
-  else cycle.style.display = "none";
+  cycle_view = document.getElementById("cycle_view");
+  if (cycle_view.style.display == "none") cycle_view.style.display = "block";
+  else cycle_view.style.display = "none";
 }
-
+function stop_cycle(){
+  if(myvar)
+  clearInterval(myvar);
+  cycle_view = document.getElementById("cycle_view");
+  cycle_view.style.display = "none";
+  btn = document.getElementById("btn-visualize");
+    btn.disabled = false;
+}
 //// AI METHODS
 function clear_centroid(group_num, centroid) {
   for (var i = 0; i < group_num; i++) {
@@ -163,7 +177,7 @@ function clear_centroid(group_num, centroid) {
       }
     });
     if (!a_node) {
-      data.setAttribute("class", "grid");
+      data.setAttribute("class", "grid-transition");
     }
   }
 }
@@ -220,29 +234,36 @@ function reestimate_group(node, centroid, convergent) {
 
 function visualize_k_means() {
   if (group_num > 0 && arrNode.length>0) {
+    btn = document.getElementById("btn-visualize");
+    btn.disabled = true;
       toggle_cycle();
     var ctr = 0;
     var cycle = 1;
     var convergent = true;
-    var myvar = setInterval(function() {
+    myvar = setInterval(function() {
       convergent = reestimate_group(arrNode[ctr], centroid, convergent);
       ctr += 1;
 
       if (ctr == arrNode.length) {
-        clear_centroid(group_num, centroid);
+        setTimeout(function(){
+          clear_centroid(group_num, centroid);
+        },400);
+        
         if (convergent) {
           clearInterval(myvar);
           console.log("cycle completed");
+          document.getElementById("cycle_view").innerHTML= "Cycle : " + cycle+" (Finished)";
+          
         } else {
           setTimeout(function() {
             recalibrate_centroid(group_num, centroid);
-          }, 1000);
+            cycle += 1;
+            document.getElementById("cycle_view").innerHTML= "Cycle : " + cycle;
+          }, 1200);
           setTimeout(function() {
             convergent = true;
-            ctr = 0;
-            cycle += 1;
-            document.getElementById("cycle_view").innerHTML("Cycle " + cycle);
-          }, 4000);
+            ctr = 0;            
+          }, 2300);
         }
       }
     }, 50);
