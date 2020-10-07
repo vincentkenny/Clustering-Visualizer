@@ -11,6 +11,9 @@ var arrNode = new Array();
 var centroid = new Array();
 var group_num = 0;
 var myvar;
+var ver_length = 20;
+var hor_length = 55;
+var initial_data_number = 50;
 
 function add(a, b) {
   return a + b;
@@ -37,12 +40,31 @@ function view_dropdown() {
 
 //estrablishing functions and generating grid
 function generate() {
+  console.log(window.screen.availHeight + "x" + window.screen.availWidth);
+  if(window.screen.availWidth<450){
+    hor_length = 11;
+    ver_length = 15;
+    initial_data_number = 25;
+  }
+  else if(window.screen.availWidth<800){
+    hor_length = 29;
+    ver_length = 11;
+    initial_data_number = 35;
+  }
+  else{
+    hor_length = 55;
+    ver_length = 20;
+    initial_data_number = 50;
+  }
+  body = document.getElementById("board");
+  arrNode = new Array();
+  body.innerHTML="";
   group_num = 0;
-  for (i = 0; i < 20; i++) {
+  for (i = 0; i < ver_length; i++) {
     var tag = document.createElement("tr");
     tag.setAttribute("id", "row " + i);
     document.getElementById("board").appendChild(tag);
-    for (j = 0; j < 55; j++) {
+    for (j = 0; j < hor_length; j++) {
       var tag = document.createElement("td");
       tag.setAttribute("class", "grid");
       tag.setAttribute("id", i + "-" + j);
@@ -119,9 +141,9 @@ function scatter_data() {
   if (group_num > 0) {
     reset_grid();
     arrNode = new Array();
-    for (var i = 0; i < 50; i++) {
-      x = Math.floor(Math.random() * 55);
-      y = Math.floor(Math.random() * 20);
+    for (var i = 0; i < initial_data_number; i++) {
+      x = Math.floor(Math.random() * hor_length);
+      y = Math.floor(Math.random() * ver_length);
       arrNode.push(new node(x, y, 0));
     }
     arrNode.forEach(function(item) {
@@ -154,8 +176,8 @@ function toggle_cycle() {
   else cycle_view.style.display = "none";
 }
 function stop_cycle(){
-  if(myvar)
-  clearInterval(myvar);
+  if(myvar){console.log(myvar);
+  clearInterval(myvar);console.log(myvar);}
   cycle_view = document.getElementById("cycle_view");
   cycle_view.style.display = "none";
   btn = document.getElementById("btn-visualize");
@@ -243,7 +265,7 @@ function visualize_k_means() {
     myvar = setInterval(function() {
       convergent = reestimate_group(arrNode[ctr], centroid, convergent);
       ctr += 1;
-
+      console.log(myvar);
       if (ctr == arrNode.length) {
         setTimeout(function(){
           clear_centroid(group_num, centroid);

@@ -508,3 +508,172 @@ button {
 #cycle_view {
   display: none;
 }
+
+
+@media only screen and (max-width: 600px) {
+  .grid {
+    width: 33px;
+    height: 33px;
+    background-color: white;
+    outline: 1px solid rgb(175, 216, 248);
+    display: inline-block;
+  }
+  .grid-transition{
+    width: 33px;
+    height: 33px;
+    background-color: white;
+    outline: 1px solid rgb(175, 216, 248);
+    display: inline-block;
+    animation-name: gridAnimation;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-out;
+    animation-delay: 0;
+    animation-direction: alternate;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+  }
+
+  .node {
+    width: 33px;
+    height: 33px;
+    background-color: rgb(22, 0, 30);
+    outline: 1px solid rgb(175, 216, 248);
+    display: inline-block;
+  }
+  
+  .node {
+    animation-name: visitedAnimation;
+    animation-duration: 0.2s;
+    animation-timing-function: ease-out;
+    animation-delay: 0;
+    animation-direction: alternate;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+  }
+  
+  
+  .group1 {
+    width: 33px;
+    height: 33px;
+    background-color: rgb(26, 208, 157);
+    outline: 1px solid rgb(175, 216, 248);
+    display: inline-block;
+    animation-name: visitedAnimation1;
+    animation-duration: 0.4s;
+    animation-timing-function: ease-out;
+    animation-delay: 0;
+    animation-direction: alternate;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+  }
+  
+  @keyframes visitedAnimation1 {
+    0% {
+      transform: scale(0.3);
+      background-color: rgba(0, 0, 66, 0.75);
+    }
+  
+    100% {
+      transform: scale(1);
+      background-color: rgb(26, 208, 157);
+    }
+  }
+  
+  .group2 {
+    width: 33px;
+    height: 33px;
+    background-color: rgb(226, 212, 84);
+    outline: 1px solid rgb(175, 216, 248);
+    display: inline-block;
+    animation-name: visitedAnimation2;
+    animation-duration: 0.4s;
+    animation-timing-function: ease-out;
+    animation-delay: 0;
+    animation-direction: alternate;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+  }
+  .group3 {
+    width: 33px;
+    height: 33px;
+    background-color: rgb(247, 113, 125);
+    outline: 1px solid rgb(175, 216, 248);
+    display: inline-block;
+    animation-name: visitedAnimation3;
+    animation-duration: 0.4s;
+    animation-timing-function: ease-out;
+    animation-delay: 0;
+    animation-direction: alternate;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+  }
+  .group4 {
+    width: 33px;
+    height: 33px;
+    background-color: rgb(59, 191, 255);
+    outline: 1px solid rgb(175, 216, 248);
+    display: inline-block;
+    animation-name: visitedAnimation4;
+    animation-duration: 0.4s;
+    animation-timing-function: ease-out;
+    animation-delay: 0;
+    animation-direction: alternate;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+  }
+  
+  .centroid1 {
+    width: 33px;
+    height: 33px;
+    background-color: rgb(1, 128, 92);
+    outline: 1px solid rgb(175, 216, 248);
+    display: inline-block;
+    animation-name: centroidAnimation1;
+    animation-duration: 1s;
+    animation-delay: 0;
+    animation-play-state: running;
+  }
+  
+  .centroid2 {
+    width: 33px;
+    height: 33px;
+    background-color: rgb(161, 145, 1);
+    outline: 1px solid rgb(175, 216, 248);
+    display: inline-block;
+    animation-name: centroidAnimation2;
+    animation-duration: 1s;
+    animation-delay: 0;
+    animation-play-state: running;
+  }
+  
+  .centroid3 {
+    width: 33px;
+    height: 33px;
+    background-color: rgb(165, 0, 14);
+    outline: 1px solid rgb(175, 216, 248);
+    display: inline-block;
+    animation-name: centroidAnimation3;
+    animation-duration: 1s;
+    animation-delay: 0;
+    animation-play-state: running;
+  }
+  
+  .centroid4 {
+    width: 33px;
+    height: 33px;
+    background-color: rgb(0, 91, 136);
+    outline: 1px solid rgb(175, 216, 248);
+    display: inline-block;
+    animation-name: centroidAnimation4;
+    animation-duration: 1s;
+    animation-delay: 0;
+    animation-play-state: running;
+  }
+  
+}
