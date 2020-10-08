@@ -41,7 +41,6 @@ function view_dropdown() {
 
 //estrablishing functions and generating grid
 function generate() {
-  console.log(window.screen.availHeight + "x" + window.screen.availWidth);
   //smartphone potrait
   if (window.screen.availWidth < 600) {
     hor_length = 11;
