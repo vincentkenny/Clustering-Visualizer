@@ -14,6 +14,7 @@ var myvar;
 var ver_length = 20;
 var hor_length = 55;
 var initial_data_number = 50;
+var visual_started=false;
 
 function add(a, b) {
   return a + b;
@@ -41,24 +42,33 @@ function view_dropdown() {
 //estrablishing functions and generating grid
 function generate() {
   console.log(window.screen.availHeight + "x" + window.screen.availWidth);
-  if(window.screen.availWidth<450){
+  //smartphone potrait
+  if (window.screen.availWidth < 600) {
     hor_length = 11;
     ver_length = 15;
     initial_data_number = 25;
+    document.getElementById("group-selector").innerHTML="Groups";
+    document.getElementById("arrow-icon").style.display = "none";
   }
-  else if(window.screen.availWidth<800){
-    hor_length = 29;
-    ver_length = 11;
+  //tablet potrait
+  else if (window.screen.availWidth >600 && window.screen.availWidth <770) {
+    hor_length = 21;
+    ver_length = 22;
     initial_data_number = 35;
+    document.getElementById("group-selector").innerHTML="Groups";
+    document.getElementById("arrow-icon").style.display = "none";
   }
-  else{
+  //desktop 
+  else {
     hor_length = 55;
     ver_length = 20;
     initial_data_number = 50;
+    document.getElementById("group-selector").innerHTML="Number of Groups";
+    document.getElementById("arrow-icon").style.display = "inline";
   }
   body = document.getElementById("board");
   arrNode = new Array();
-  body.innerHTML="";
+  body.innerHTML = "";
   group_num = 0;
   for (i = 0; i < ver_length; i++) {
     var tag = document.createElement("tr");
@@ -68,15 +78,15 @@ function generate() {
       var tag = document.createElement("td");
       tag.setAttribute("class", "grid");
       tag.setAttribute("id", i + "-" + j);
-      tag.addEventListener("click", function() {
+      tag.addEventListener("click", function () {
         cur_stat = this.id;
         coords = this.id.split("-");
-        y = coords[0];
-        x = coords[1];
-        if (this.className == "grid" ||this.className=="grid-transition") {
+        y = parseInt(coords[0]);
+        x = parseInt(coords[1]);
+        if ((this.className == "grid" || this.className == "grid-transition") && !visual_started) {
           this.className = "node";
           arrNode.push(new node(x, y, 0));
-        } else if(this.className=="node"){
+        } else if (this.className == "node" && !visual_started) {
           this.className = "grid";
           for (var k = 0; k < arrNode.length; k++) {
             if (arrNode[k].x == x && arrNode[k].y == y) {
@@ -85,19 +95,22 @@ function generate() {
           }
         }
       });
-      tag.addEventListener("mousedown", function() {
+      tag.addEventListener("mousedown", function () {
         cur_stat = this.id;
       });
-      tag.addEventListener("mouseenter", function() {
+      tag.addEventListener("mouseenter", function () {
         if (mouseDown == true) {
           coords = this.id.split("-");
           y = parseInt(coords[0]);
           x = parseInt(coords[1]);
           if (this.id != cur_stat) {
-            if (this.className == "grid"||this.className=="grid-transition") {
+            if ((
+              this.className == "grid" ||
+              this.className == "grid-transition"
+            )  && !visual_started) {
               this.className = "node";
               arrNode.push(new node(x, y, 0));
-            } else if(this.className=="node"){
+            } else if (this.className == "node"  && !visual_started) {
               this.className = "grid";
               for (var k = 0; k < arrNode.length; k++) {
                 if (arrNode[k].x == x && arrNode[k].y == y) {
@@ -115,11 +128,11 @@ function generate() {
   }
   var mouseDown = false;
   body = document.getElementById("board");
-  body.addEventListener("mouseup", function() {
+  body.addEventListener("mouseup", function () {
     mouseDown = false;
     cur_stat = null;
   });
-  body.addEventListener("mousedown", function() {
+  body.addEventListener("mousedown", function () {
     mouseDown = true;
   });
   cycle_view = document.getElementById("cycle_view");
@@ -128,6 +141,7 @@ function generate() {
 
 function reset_grid() {
   stop_cycle();
+  visual_started=false;
   arrNode = new Array();
   grid = document.getElementById("board").getElementsByTagName("td");
   for (var i = 0; i < grid.length; i++) {
@@ -146,7 +160,7 @@ function scatter_data() {
       y = Math.floor(Math.random() * ver_length);
       arrNode.push(new node(x, y, 0));
     }
-    arrNode.forEach(function(item) {
+    arrNode.forEach(function (item) {
       address = item.y + "-" + item.x;
       data = document.getElementById(address);
       data.setAttribute("class", "node");
@@ -168,20 +182,27 @@ function scatter_data() {
   } else {
     btn.innerHTML = "Set Number of Group!";
   }
+  console.log("data "+arrNode.length);
+  console.log("centroid"+ centroid.length);
 }
 
 function toggle_cycle() {
-  cycle_view = document.getElementById("cycle_view");
-  if (cycle_view.style.display == "none") cycle_view.style.display = "block";
-  else cycle_view.style.display = "none";
+  if (window.availWidth >600) {
+    cycle_view = document.getElementById("cycle_view");
+    if (cycle_view.style.display == "none") cycle_view.style.display = "block";
+    else cycle_view.style.display = "none";
+  }
 }
-function stop_cycle(){
-  if(myvar){console.log(myvar);
-  clearInterval(myvar);console.log(myvar);}
+function stop_cycle() {
+  if (myvar) {
+    console.log(myvar);
+    clearInterval(myvar);
+    console.log(myvar);
+  }
   cycle_view = document.getElementById("cycle_view");
   cycle_view.style.display = "none";
   btn = document.getElementById("btn-visualize");
-    btn.disabled = false;
+  btn.disabled = false;
 }
 //// AI METHODS
 function clear_centroid(group_num, centroid) {
@@ -192,7 +213,7 @@ function clear_centroid(group_num, centroid) {
     data = document.getElementById(address);
     cur_category = i + 1;
     a_node = false;
-    arrNode.forEach(function(item) {
+    arrNode.forEach(function (item) {
       if (item.x == centroid_x && item.y == centroid_y) {
         data.setAttribute("class", "group" + item.group);
         a_node = true;
@@ -209,7 +230,7 @@ function recalibrate_centroid(group_num, centroid) {
     cur_x = 0;
     cur_y = 0;
     num_member = 0;
-    arrNode.forEach(function(item) {
+    arrNode.forEach(function (item) {
       if (item.group == cur_category) {
         cur_x += item.x;
         cur_y += item.y;
@@ -222,6 +243,7 @@ function recalibrate_centroid(group_num, centroid) {
     cur_y = Math.round(cur_y);
     centroid[i] = [cur_x, cur_y];
     address = cur_y + "-" + cur_x;
+    console.log(i+" "+address);
     data = document.getElementById(address);
     data.setAttribute("class", "centroid" + cur_category);
   }
@@ -255,44 +277,47 @@ function reestimate_group(node, centroid, convergent) {
 }
 
 function visualize_k_means() {
-  if (group_num > 0 && arrNode.length>0) {
+  if (group_num > 0 && arrNode.length > 0) {
+    visual_started = true;
     btn = document.getElementById("btn-visualize");
     btn.disabled = true;
-      toggle_cycle();
+    toggle_cycle();
     var ctr = 0;
     var cycle = 1;
     var convergent = true;
-    myvar = setInterval(function() {
+    myvar = setInterval(function () {
+      console.log("data"+ arrNode.length);
       convergent = reestimate_group(arrNode[ctr], centroid, convergent);
       ctr += 1;
-      console.log(myvar);
       if (ctr == arrNode.length) {
-        setTimeout(function(){
+        setTimeout(function () {
           clear_centroid(group_num, centroid);
-        },400);
-        
+        }, 400);
+
         if (convergent) {
           clearInterval(myvar);
           console.log("cycle completed");
-          document.getElementById("cycle_view").innerHTML= "Cycle : " + cycle+" (Finished)";
-          
+          document.getElementById("cycle_view").innerHTML =
+            "Cycle : " + cycle + " (Finished)";
+          document.getElementById("btn-visualize").innerHTML = "Clustering Finished";
         } else {
-          setTimeout(function() {
+          setTimeout(function () {
             recalibrate_centroid(group_num, centroid);
             cycle += 1;
-            document.getElementById("cycle_view").innerHTML= "Cycle : " + cycle;
+            document.getElementById("cycle_view").innerHTML =
+              "Cycle : " + cycle;
           }, 1200);
-          setTimeout(function() {
+          setTimeout(function () {
             convergent = true;
-            ctr = 0;            
+            ctr = 0;
           }, 2300);
         }
       }
     }, 50);
-  }else if(group_num<=0){
+  } else if (group_num <= 0) {
     btn = document.getElementById("btn-visualize");
     btn.innerHTML = "Set Number of Group!";
-  }else if(arrNode.length<=0){
+  } else if (arrNode.length <= 0) {
     btn = document.getElementById("btn-visualize");
     btn.innerHTML = "Scatter Data First!";
   }
